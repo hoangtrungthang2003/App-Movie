@@ -7,6 +7,7 @@ import 'package:app_movie/bloc/person_bloc/person_event.dart';
 import 'package:app_movie/main.dart';
 import 'package:app_movie/model/movie.dart';
 import 'package:app_movie/screen/category_screen.dart';
+import 'package:app_movie/screen/movie_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -93,13 +94,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 builder: (BuildContext context) {
                                   return GestureDetector(
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         MovieDetailScreen(movie: movie),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              MovieDetailScreen(movie: movie),
+                                        ),
+                                      );
                                     },
                                     child: Stack(
                                       alignment: Alignment.bottomLeft,
