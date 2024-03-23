@@ -45,13 +45,17 @@ class _BottomNavigationBarExampleState
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
+    Center(
+      child: Text(
+        'Index 1: Business',
+        style: optionStyle,
+      ),
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
+    Center(
+      child: Text(
+        'Index 2: School',
+        style: optionStyle,
+      ),
     ),
   ];
 
@@ -65,8 +69,13 @@ class _BottomNavigationBarExampleState
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          _widgetOptions.elementAt(_selectedIndex),
+          SizedBox(
+            width: mq.width,
+            height: mq.height,
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
           Positioned(
             bottom: 0.0,
             left: 0.0,

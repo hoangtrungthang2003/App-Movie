@@ -9,6 +9,7 @@ import 'package:app_movie/bloc/moviebloc.dart';
 import 'package:app_movie/main.dart';
 import 'package:app_movie/model/genre.dart';
 import 'package:app_movie/model/movie.dart';
+import 'package:app_movie/screen/movie_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -169,13 +170,13 @@ class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
                       children: <Widget>[
                         GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         MovieDetailScreen(movie: movie),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MovieDetailScreen(movie: movie),
+                              ),
+                            );
                           },
                           child: ClipRRect(
                             child: CachedNetworkImage(
@@ -218,9 +219,7 @@ class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 2),
                         SizedBox(
                           width: mq.width * .3,
                           child: Text(
@@ -264,7 +263,8 @@ class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
                               ),
                               const SizedBox(width: 3),
                               Text(
-                                movie.voteAverage!,
+                                double.parse(movie.voteAverage!)
+                                    .toStringAsFixed(1),
                                 style: const TextStyle(
                                   color: Color.fromARGB(115, 255, 255, 255),
                                 ),

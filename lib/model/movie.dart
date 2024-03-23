@@ -47,4 +47,6 @@ class Movie {
         voteCount: json['vote_count'],
         voteAverage: json['vote_average'].toString());
   }
+
+  get trailerId => null;
 }

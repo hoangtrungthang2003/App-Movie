@@ -7,6 +7,7 @@ import 'package:app_movie/bloc/person_bloc/person_event.dart';
 import 'package:app_movie/main.dart';
 import 'package:app_movie/model/movie.dart';
 import 'package:app_movie/screen/category_screen.dart';
+import 'package:app_movie/screen/movie_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,34 +34,73 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
       child: Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
           backgroundColor: Colors.black,
-          elevation: 0,
-          leading: const Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
-          title: Text(
-            'Movies-db'.toUpperCase(),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'muli',
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            elevation: 0,
+            title: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 15),
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/logo.jpg'),
+                  ),
                 ),
-          ),
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 15),
-              child: const CircleAvatar(
-                backgroundImage: AssetImage('assets/images/logo.jpg'),
-              ),
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Hello",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    ),
+                    Text("Hoàng Thắng"),
+                  ],
+                )
+              ],
             ),
-          ],
-        ),
-        body: _buildBody(context),
-      ),
+            centerTitle: false,
+            actions: <Widget>[
+              Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(255, 25, 25, 25),
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    // Xử lý sự kiện khi nhấn vào nút menu
+                  },
+                  iconSize: 30,
+                ),
+              ),
+              const SizedBox(width: 20),
+              Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(255, 25, 25, 25),
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    // Xử lý sự kiện khi nhấn vào nút menu
+                  },
+                  iconSize: 30,
+                ),
+              ),
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: _buildBody(context),
+          )),
     );
   }
 
@@ -78,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (state is MovieLoading) {
                       return Center(
                         child: Platform.isAndroid
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const CircularProgressIndicator()
                             : const CupertinoActivityIndicator(),
                       );
                     } else if (state is MovieLoaded) {
@@ -93,13 +133,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 builder: (BuildContext context) {
                                   return GestureDetector(
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         MovieDetailScreen(movie: movie),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              MovieDetailScreen(movie: movie),
+                                        ),
+                                      );
                                     },
                                     child: Stack(
                                       alignment: Alignment.bottomLeft,
@@ -114,10 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             fit: BoxFit.cover,
                                             width: mq.width,
                                             height: mq.height / 2,
-                                            placeholder: (context, url) => Platform
-                                                    .isAndroid
-                                                ? const CircularProgressIndicator()
-                                                : const CupertinoActivityIndicator(),
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child: Platform.isAndroid
+                                                  ? const CircularProgressIndicator()
+                                                  : const CupertinoActivityIndicator(),
+                                            ),
                                             errorWidget:
                                                 (context, url, error) =>
                                                     Container(
@@ -176,8 +218,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       );
                     } else {
-                      return Container(
-                        child: const Text('Something went wrong!!!'),
+                      return const Center(
+                        child: Text('Kiểm tra kết nối internet của bạn!!!'),
                       );
                     }
                   },
