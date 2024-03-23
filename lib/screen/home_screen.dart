@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (state is MovieLoading) {
                       return Center(
                         child: Platform.isAndroid
-                            ? const CircularProgressIndicator()
+                            ? const Center(child: CircularProgressIndicator())
                             : const CupertinoActivityIndicator(),
                       );
                     } else if (state is MovieLoaded) {

@@ -71,23 +71,26 @@ class _BottomNavigationBarExampleState
             bottom: 0.0,
             left: 0.0,
             right: 0.0,
-            child: ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(20.0)),
-              child: BottomNavigationBar(
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: "Home"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person_outline), label: "User"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite_border), label: "Favorite"),
-                ],
-                currentIndex: _selectedIndex,
-                selectedItemColor: Colors.red,
-                unselectedItemColor: Colors.white,
-                onTap: _onItemTapped,
-                backgroundColor: const Color.fromARGB(221, 0, 0, 0),
+            child: Container(
+              margin: const EdgeInsets.all(8),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(20.0), bottom: Radius.circular(20.0)),
+                child: BottomNavigationBar(
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.home), label: "Home"),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.person_outline), label: "User"),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite_border), label: "Favorite"),
+                  ],
+                  currentIndex: _selectedIndex,
+                  selectedItemColor: Colors.red,
+                  unselectedItemColor: Colors.white,
+                  onTap: _onItemTapped,
+                  backgroundColor: const Color.fromARGB(255, 25, 25, 25),
+                ),
               ),
             ),
           ),
