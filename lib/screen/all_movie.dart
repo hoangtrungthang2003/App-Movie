@@ -1,40 +1,28 @@
 import 'dart:io';
 
 import 'package:app_movie/bloc/genre_event.dart';
-import 'package:app_movie/bloc/genre_state.dart';
 import 'package:app_movie/bloc/genrebloc.dart';
 import 'package:app_movie/bloc/movie_event.dart';
 import 'package:app_movie/bloc/movie_state.dart';
 import 'package:app_movie/bloc/moviebloc.dart';
 import 'package:app_movie/main.dart';
-import 'package:app_movie/model/genre.dart';
 import 'package:app_movie/model/movie.dart';
-import 'package:app_movie/screen/all_movie.dart';
 import 'package:app_movie/screen/movie_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BuildWidgetCategory extends StatefulWidget {
-  final int selectedGenre;
-
-  const BuildWidgetCategory({super.key, this.selectedGenre = 28});
+class AllMovie extends StatefulWidget {
+  final int genreId;
+  final String genreName;
+  const AllMovie({super.key, required this.genreId, required this.genreName});
 
   @override
-  BuildWidgetCategoryState createState() => BuildWidgetCategoryState();
+  State<AllMovie> createState() => _AllMovieState();
 }
 
-class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
-  late int selectedGenre;
-  String selectedGenreName = 'Action';
-
-  @override
-  void initState() {
-    super.initState();
-    selectedGenre = widget.selectedGenre;
-  }
-
+class _AllMovieState extends State<AllMovie> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -43,142 +31,44 @@ class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
           create: (_) => GenreBloc()..add(const GenreEventStarted()),
         ),
         BlocProvider<MovieBloc>(
-          create: (_) => MovieBloc()..add(MovieEventStarted(selectedGenre, '')),
+          create: (_) =>
+              MovieBloc()..add(MovieEventStarted(widget.genreId, '')),
         ),
       ],
       child: _buildGenre(context),
     );
   }
 
+  @override
   Widget _buildGenre(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        BlocBuilder<GenreBloc, GenreState>(
-          builder: (context, state) {
-            if (state is GenreLoading) {
-              return Center(
-                child: Platform.isAndroid
-                    ? const CircularProgressIndicator()
-                    : const CupertinoActivityIndicator(),
-              );
-            } else if (state is GenreLoaded) {
-              List<Genre> genres = state.genreList;
-              return SizedBox(
-                height: 45,
-                child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const VerticalDivider(
-                    color: Colors.transparent,
-                    width: 5,
-                  ),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: genres.length,
-                  itemBuilder: (context, index) {
-                    Genre genre = genres[index];
-                    return Column(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              Genre genre = genres[index];
-                              selectedGenre = genre.id!;
-                              selectedGenreName = genre.name!;
-                              context
-                                  .read<MovieBloc>()
-                                  .add(MovieEventStarted(selectedGenre, ''));
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.black45,
-                              ),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(25),
-                              ),
-                              color: (genre.id == selectedGenre)
-                                  ? Colors.red
-                                  : Colors.white,
-                            ),
-                            child: Text(
-                              genre.name!.toUpperCase(),
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: (genre.id == selectedGenre)
-                                    ? Colors.white
-                                    : Colors.black45,
-                                fontFamily: 'muli',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              );
-            } else {
-              return Container();
-            }
-          },
-        ),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'movies'.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontFamily: 'muli',
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AllMovie(
-                            genreId: selectedGenre,
-                            genreName: selectedGenreName)),
-                  );
-                },
-                child: Text(
-                  'show all'.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white54,
-                    fontFamily: 'muli',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        BlocBuilder<MovieBloc, MovieState>(
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text(widget.genreName),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: BlocBuilder<MovieBloc, MovieState>(
           builder: (context, state) {
             if (state is MovieLoading) {
               return const Center();
             } else if (state is MovieLoaded) {
               List<Movie> movieList = state.movieList;
               return SizedBox(
-                height: mq.height * .31,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const VerticalDivider(
-                      color: Colors.transparent, width: 5),
-                  scrollDirection: Axis.horizontal,
+                height: mq.height,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 4.0, // Khoảng cách giữa các hàng
+                    crossAxisSpacing: 4.0,
+                    childAspectRatio: .5, // Khoảng cách giữa các cột
+                  ),
                   itemCount: movieList.length,
                   itemBuilder: (context, index) {
                     Movie movie = movieList[index];
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+                      children: [
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -293,7 +183,7 @@ class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
             }
           },
         ),
-      ],
+      ),
     );
   }
 }

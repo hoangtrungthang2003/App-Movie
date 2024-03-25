@@ -92,9 +92,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             height: MediaQuery.of(context).size.height / 2,
                             width: double.infinity,
                             fit: BoxFit.cover,
-                            placeholder: (context, url) => Platform.isAndroid
-                                ? const CircularProgressIndicator()
-                                : const CupertinoActivityIndicator(),
+                            placeholder: (context, url) => Center(
+                              child: Platform.isAndroid
+                                  ? const CircularProgressIndicator()
+                                  : const CupertinoActivityIndicator(),
+                            ),
                             errorWidget: (context, url, error) => Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
