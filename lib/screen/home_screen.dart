@@ -8,6 +8,7 @@ import 'package:app_movie/main.dart';
 import 'package:app_movie/model/movie.dart';
 import 'package:app_movie/screen/category_screen.dart';
 import 'package:app_movie/screen/movie_detail_screen.dart';
+import 'package:app_movie/screen/search_movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,7 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    // Xử lý sự kiện khi nhấn vào nút menu
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SearchMovie()),
+                    );
                   },
                   iconSize: 30,
                 ),

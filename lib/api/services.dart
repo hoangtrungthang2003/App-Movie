@@ -129,4 +129,17 @@ class ApiService {
           'Exception accoured: $error with stacktrace: $stacktrace');
     }
   }
+  Future<List<Movie>> searchListMovie(String query) async {
+    //○	https://api.themoviedb.org/3/search/keyword?api_key=e9e9d8da18ae29fc430845952232787c&page=1&query=women
+    try {
+      final url = '$baseUrl/search/movie?$apiKey&page=1&query=$query';
+      final response = await _dio.get(url);
+      var movies = response.data['results'] as List;
+      List<Movie> movieList = movies.map((m) => Movie.fromJson(m)).toList();
+      return movieList;
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
 }
