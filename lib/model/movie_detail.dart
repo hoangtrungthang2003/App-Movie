@@ -1,4 +1,5 @@
 import 'package:app_movie/model/cast_list.dart';
+import 'package:app_movie/model/genre.dart';
 import 'package:app_movie/model/movie_image.dart';
 
 class MovieDetail {
@@ -13,6 +14,7 @@ class MovieDetail {
   final String? runtime;
   final String? voteAverage;
   final String? voteCount;
+  List<Genre>? genre;
 
   String? trailerId; // Making it nullable
 
@@ -32,7 +34,8 @@ class MovieDetail {
     this.runtime,
     this.voteAverage,
     this.voteCount,
-    this.trailerId, // Added trailerId to the constructor
+    this.genre,
+    this.trailerId, 
     required this.movieImage, // Making movieImage required
     required this.castList, // Making castList required
   });

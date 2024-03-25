@@ -7,6 +7,7 @@ import 'package:app_movie/model/cast_list.dart';
 import 'package:app_movie/model/movie.dart';
 import 'package:app_movie/model/movie_detail.dart';
 import 'package:app_movie/model/screen_shot.dart';
+import 'package:app_movie/screen/booking_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -82,9 +83,15 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       bottomRight: Radius.circular(30),
                     ),
                     child: _isVideoPlaying
-                        ? YoutubePlayer(
-                            controller: _youtubeController,
-                            showVideoProgressIndicator: true,
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 2,
+                            width: double.infinity,
+                            child: Center(
+                              child: YoutubePlayer(
+                                controller: _youtubeController,
+                                showVideoProgressIndicator: true,
+                              ),
+                            ),
                           )
                         : CachedNetworkImage(
                             imageUrl:
@@ -117,26 +124,29 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 120),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isVideoPlaying = true;
-                            _youtubeController.load(movieDetail.trailerId!);
-                            _youtubeController.play();
-                          });
-                        },
-                        child: const Center(
-                          child: Column(
-                            children: <Widget>[
-                              Icon(
-                                Icons.play_circle_outline,
-                                color: Colors.yellow,
-                                size: 65,
+                      child: _isVideoPlaying
+                          ? Container()
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _isVideoPlaying = true;
+                                  _youtubeController
+                                      .load(movieDetail.trailerId!);
+                                  _youtubeController.play();
+                                });
+                              },
+                              child: const Center(
+                                child: Column(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.play_circle_outline,
+                                      color: Colors.yellow,
+                                      size: 65,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            ),
                     ),
                     const SizedBox(
                       height: 160,
@@ -179,7 +189,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ElevatedButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    _isVideoPlaying = true;
+                                    _youtubeController
+                                        .load(movieDetail.trailerId!);
+                                    _youtubeController.play();
+                                  });
+                                },
                                 icon: const Icon(Icons.play_arrow),
                                 label: const Text(
                                   "Play",
@@ -213,6 +230,31 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                 ),
                               ),
                             ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BookingScreen(
+                                      movieName: movieDetail.title!,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.money_rounded),
+                              label: const Text(
+                                "Mua vé xem phim",
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 10,

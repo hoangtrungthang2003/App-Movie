@@ -21,7 +21,6 @@ class Screenshot extends Equatable {
 
   factory Screenshot.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      // If json is null, return an empty instance of Screenshot
       return Screenshot();
     }
 

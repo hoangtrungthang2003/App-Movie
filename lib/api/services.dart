@@ -38,6 +38,18 @@ class ApiService {
     }
   }
 
+  Future<List<Genre>> getGenreOfMovie(int movieId) async {
+    try {
+      final response = await _dio.get('$baseUrl/movie/$movieId?$apiKey');
+      List<dynamic> genresData = response.data['genres'];
+      List<Genre> genres =
+          genresData.map((data) => Genre.fromJson(data)).toList();
+      return genres;
+    } catch (error) {
+      throw Exception('Failed to get movie genres: $error');
+    }
+  }
+
   Future<List<Genre>> getGenreList() async {
     try {
       final response = await _dio.get('$baseUrl/genre/movie/list?$apiKey');
@@ -72,7 +84,8 @@ class ApiService {
       movieDetail.movieImage = await getMovieImage(movieId);
 
       movieDetail.castList = await getCastList(movieId);
-
+      
+      movieDetail.genre = await getGenreOfMovie(movieId);
       return movieDetail;
     } catch (error, stacktrace) {
       throw Exception(
@@ -129,6 +142,7 @@ class ApiService {
           'Exception accoured: $error with stacktrace: $stacktrace');
     }
   }
+
   Future<List<Movie>> searchListMovie(String query) async {
     //○	https://api.themoviedb.org/3/search/keyword?api_key=e9e9d8da18ae29fc430845952232787c&page=1&query=women
     try {

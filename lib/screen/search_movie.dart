@@ -110,15 +110,14 @@ class _SearchMovieState extends State<SearchMovie> {
           ),
           leading: ClipRRect(
             child: CachedNetworkImage(
-              imageUrl:
-                  'https://image.tmdb.org/t/p/original${movie.backdropPath}',
+              imageUrl: 'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
               imageBuilder: (context, imageProvider) {
                 return Container(
-                  width: mq.width * .25,
-                  height: mq.height * .4,
+                  width: mq.width * .3,
+                  height: mq.height * .5,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(
-                      Radius.circular(12),
+                      Radius.circular(5),
                     ),
                     image: DecorationImage(
                       image: imageProvider,
@@ -128,8 +127,8 @@ class _SearchMovieState extends State<SearchMovie> {
                 );
               },
               placeholder: (context, url) => SizedBox(
-                width: mq.width * .25,
-                height: mq.height * .4,
+                width: mq.width * .3,
+                height: mq.height,
                 child: Center(
                   child: Platform.isAndroid
                       ? const CircularProgressIndicator()
@@ -137,8 +136,8 @@ class _SearchMovieState extends State<SearchMovie> {
                 ),
               ),
               errorWidget: (context, url, error) => Container(
-                width: mq.width * .25,
-                height: mq.height * .4,
+                width: mq.width * .3,
+                height: mq.height,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/img_not_found.jpg'),
