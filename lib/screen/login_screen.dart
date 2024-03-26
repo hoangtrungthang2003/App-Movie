@@ -32,37 +32,34 @@ class _LoginPageState extends State<LoginPage> {
     return _user != null
         ? const BottomNavigationBarExample()
         : Scaffold(
+            backgroundColor: Colors.black12,
             appBar: AppBar(
-              title: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 16.0,
-                        backgroundImage: AssetImage('assets/icon-logo-x.png'),
-                      ),
-                      SizedBox(width: 15),
-                      Text(
-                        "Quản lý chi tiêu",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              leading: Container(),
+              title: const Text(
+                "Movie App",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(),
+                Container(
+                  height: mq.height * .6,
+                  width: mq.width * .9,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 Center(
-                  child: SizedBox(
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: mq.height * .1),
                     height: 50,
                     child: SignInButton(
                       Buttons.google,
@@ -70,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _handleGoogleSignIn,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
-                        side: const BorderSide(color: Colors.orange),
+                        side: const BorderSide(color: Colors.red),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
