@@ -65,7 +65,7 @@ class MovieDetail {
       movieImage: MovieImage.fromJson(json['movie_image']),
       castList: (json['cast_list'] as List<dynamic>?)
               ?.map((c) => Cast.fromJson(c))
-              ?.toList() ??
+              .toList() ??
           [],
     );
   }
@@ -79,11 +79,11 @@ class MovieDetail {
     int minutes = totalMinutes % 60;
 
     if (hours > 0 && minutes > 0) {
-      return '$hours' + 'h' + ' ' + '$minutes' + 'm';
+      return '${hours}h ${minutes}m';
     } else if (hours > 0) {
-      return '$hours' + 'h';
+      return '${hours}h';
     } else if (minutes > 0) {
-      return '$minutes' + 'm';
+      return '${minutes}m';
     } else {
       return '';
     }

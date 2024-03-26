@@ -39,7 +39,6 @@ class _AllMovieState extends State<AllMovie> {
     );
   }
 
-  @override
   Widget _buildGenre(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,

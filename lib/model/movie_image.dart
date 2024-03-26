@@ -9,17 +9,17 @@ class MovieImage extends Equatable {
 
   factory MovieImage.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      return MovieImage(backdrops: [], posters: []);
+      return const MovieImage(backdrops: [], posters: []);
     }
 
     return MovieImage(
       backdrops: (json['backdrops'] as List<dynamic>?)
               ?.map((b) => Screenshot.fromJson(b as Map<String, dynamic>))
-              ?.toList() ??
+              .toList() ??
           [],
       posters: (json['posters'] as List<dynamic>?)
               ?.map((b) => Screenshot.fromJson(b as Map<String, dynamic>))
-              ?.toList() ??
+              .toList() ??
           [],
     );
   }

@@ -1,15 +1,28 @@
+import 'package:app_movie/firebase_options.dart';
 import 'package:app_movie/screen/home_screen.dart';
+import 'package:app_movie/screen/login_screen.dart';
+import 'package:app_movie/screen/user_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 late Size mq;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
@@ -25,7 +38,7 @@ class MainApp extends StatelessWidget {
           backgroundColor: Colors.black,
         ),
       ),
-      home: const BottomNavigationBarExample(),
+      home: const LoginPage(),
     );
   }
 }
@@ -45,12 +58,7 @@ class _BottomNavigationBarExampleState
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Center(
-      child: Text(
-        'Index 1: Business',
-        style: optionStyle,
-      ),
-    ),
+    Account(),
     Center(
       child: Text(
         'Index 2: School',

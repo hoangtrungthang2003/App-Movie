@@ -11,6 +11,7 @@ import 'package:app_movie/screen/movie_detail_screen.dart';
 import 'package:app_movie/screen/search_movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _user;
+  @override
+  void initState() {
+    super.initState();
+    _user = _auth.currentUser;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -43,20 +52,24 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 15),
-                  child: const CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/logo.jpg'),
-                  ),
+                  child: _user!.photoURL == null
+                      ? const CircleAvatar(
+                          backgroundImage: AssetImage('assets/images/logo.jpg'),
+                        )
+                      : CircleAvatar(
+                          backgroundImage: NetworkImage(_user!.photoURL ?? ''),
+                        ),
                 ),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Hello",
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
                     ),
-                    Text("Hoàng Thắng"),
+                    Text('${_user?.displayName}'),
                   ],
                 )
               ],

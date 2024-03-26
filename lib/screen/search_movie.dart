@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:app_movie/api/services.dart';
 import 'package:app_movie/main.dart';
 import 'package:app_movie/model/movie.dart';
+import 'package:app_movie/screen/movie_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +147,12 @@ class _SearchMovieState extends State<SearchMovie> {
             ),
           ),
           onTap: () {
-            // Navigate to movie detail page or do something else with the movie
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MovieDetailScreen(movie: movie),
+              ),
+            );
           },
         );
       },

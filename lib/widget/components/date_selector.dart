@@ -2,6 +2,8 @@ import 'package:app_movie/widget/constants.dart';
 import 'package:flutter/material.dart';
 
 class DateSelector extends StatefulWidget {
+  const DateSelector({super.key});
+
   @override
   _DateSelectorState createState() => _DateSelectorState();
 }
@@ -13,28 +15,21 @@ class _DateSelectorState extends State<DateSelector> {
   String _dayFormat(int dayWeek) {
     switch (dayWeek) {
       case 1:
-        return "MO";
-        break;
+        return "T2";
       case 2:
-        return "TU";
-        break;
+        return "T3";
       case 3:
-        return "WE";
-        break;
+        return "T4";
       case 4:
-        return "TH";
-        break;
+        return "T5";
       case 5:
-        return "FR";
-        break;
+        return "T6";
       case 6:
-        return "Sa";
-        break;
+        return "T7";
       case 7:
-        return "Su";
-        break;
+        return "CN";
       default:
-        return "MO";
+        return "T2";
     }
   }
 
@@ -46,19 +41,19 @@ class _DateSelectorState extends State<DateSelector> {
       flex: 13,
       child: Container(
         width: size.width,
-        padding: EdgeInsets.only(left: appPadding * 1.5),
+        padding: const EdgeInsets.only(left: appPadding * 1.5),
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
             Container(
               decoration: BoxDecoration(
                   color: white.withOpacity(0.1),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
                     bottomLeft: Radius.circular(12),
                   )),
             ),
-            Container(
+            SizedBox(
               width: size.width,
               child: ListView.builder(
                   itemCount: 7,
@@ -72,7 +67,7 @@ class _DateSelectorState extends State<DateSelector> {
                         });
                       },
                       child: Container(
-                        padding: EdgeInsets.all(appPadding / 5),
+                        padding: const EdgeInsets.all(appPadding / 5),
                         margin: EdgeInsets.symmetric(
                           vertical: size.height * 0.02,
                           horizontal: 12,

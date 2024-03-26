@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app_movie/bloc/movie_detail_bloc.dart';
 import 'package:app_movie/bloc/movie_detail_event.dart';
 import 'package:app_movie/bloc/movie_detail_state.dart';
-import 'package:app_movie/model/cast_list.dart';
 import 'package:app_movie/model/movie.dart';
 import 'package:app_movie/model/movie_detail.dart';
 import 'package:app_movie/model/screen_shot.dart';
@@ -11,10 +10,7 @@ import 'package:app_movie/screen/booking_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetailScreen extends StatefulWidget {

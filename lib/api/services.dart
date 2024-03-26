@@ -5,9 +5,12 @@ import 'package:app_movie/model/movie_detail.dart';
 import 'package:app_movie/model/movie_image.dart';
 import 'package:app_movie/model/person.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ApiService {
   final Dio _dio = Dio();
+  static FirebaseAuth auth = FirebaseAuth.instance;
+  static get user => auth.currentUser!;
 
   final String baseUrl = 'https://api.themoviedb.org/3';
   final String apiKey = 'api_key=e9e9d8da18ae29fc430845952232787c';
@@ -84,7 +87,7 @@ class ApiService {
       movieDetail.movieImage = await getMovieImage(movieId);
 
       movieDetail.castList = await getCastList(movieId);
-      
+
       movieDetail.genre = await getGenreOfMovie(movieId);
       return movieDetail;
     } catch (error, stacktrace) {
